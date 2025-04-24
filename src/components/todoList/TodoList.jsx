@@ -1,16 +1,39 @@
+import { useDispatch, useSelector } from 'react-redux';
 import AddForm from './AddForm';
+import { addTodo, changeTitle, deleteTodo } from '../../redux/todosSlice';
+import { nanoid } from '@reduxjs/toolkit';
+import SearchBar from '../SearchBar/SearchBar';
+import { changeFilter } from '../../redux/filterSlice';
 
 const TodoList = () => {
-  const handleAddTodo = () => {};
+  const todos = useSelector(state => state.todolist.todos);
+  const filter = useSelector(state => state.filter.filter);
+  const dispatch = useDispatch();
+  const handleAddTodo = data => {
+    const newtodo = {
+      id: nanoid(),
+      todo: data.todo,
+    };
+    dispatch(addTodo(newtodo));
+  };
+
+  const handleChangeQuery = query => {
+    dispatch(changeFilter(query));
+  };
+
+  const filteredData = todos.filter(item => item.todo.toLowerCase().includes(filter.toLowerCase()));
 
   return (
     <div>
       <AddForm handleAddTodo={handleAddTodo} />
+      {/* <SearchBar handleChangeQuery={handleChangeQuery} /> */}
+      <input type='text' onChange={e => handleChangeQuery(e.target.value)} />
       <ul>
-        {[].map(item => (
+        {filteredData.map(item => (
           <li key={item.id}>
             <h2>{item.todo}</h2>
-            <button>Delete</button>
+            <button onClick={() => dispatch(changeTitle({ ...item, todo: 'REDUX THE BEST TECHNOLOGY' }))}>Edit title</button>
+            <button onClick={() => dispatch(deleteTodo(item.id))}>Delete</button>
           </li>
         ))}
       </ul>
