@@ -4,6 +4,7 @@ import { addTodo, changeTitle, deleteTodo } from '../../redux/todosSlice';
 import { nanoid } from '@reduxjs/toolkit';
 import SearchBar from '../SearchBar/SearchBar';
 import { changeFilter } from '../../redux/filterSlice';
+import { deleteTodoThunk } from '../../redux/operations';
 
 const TodoList = () => {
   const todos = useSelector(state => state.todolist.todos);
@@ -34,7 +35,7 @@ const TodoList = () => {
           <li key={item.id}>
             <h2>{item.todo}</h2>
             <button onClick={() => dispatch(changeTitle({ ...item, todo: 'REDUX THE BEST TECHNOLOGY' }))}>Edit title</button>
-            <button onClick={() => dispatch(deleteTodo(item.id))}>Delete</button>
+            <button onClick={() => dispatch(deleteTodoThunk(item.id))}>Delete</button>
           </li>
         ))}
       </ul>

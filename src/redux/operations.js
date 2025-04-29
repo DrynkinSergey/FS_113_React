@@ -15,13 +15,22 @@ axios.defaults.baseURL = 'https://6811025927f2fdac2413a9fb.mockapi.io';
 //   }
 // };
 
-export const fetchDataThunk = createAsyncThunk('fetchTodos', async (body, thunkAPI) => {
+export const fetchDataThunk = createAsyncThunk('fetchTodos', async (_, thunkAPI) => {
   try {
-    const response = await axios.get('/tasks');
+    const response = await axios.get(`/tasks`);
     return response.data;
   } catch (error) {
     console.log(error);
     return thunkAPI.rejectWithValue(error.message);
     // return error.message;
+  }
+});
+
+export const deleteTodoThunk = createAsyncThunk('deleteTodo', async (id, thunkAPI) => {
+  try {
+    const response = await axios.delete(`/tasks/${id}`);
+    return response.data.id;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
   }
 });

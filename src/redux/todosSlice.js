@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchDataThunk } from './operations';
+import { deleteTodoThunk, fetchDataThunk } from './operations';
 //https://6811025927f2fdac2413a9fb.mockapi.io/tasks
 const initialState = {
   todos: [],
@@ -37,6 +37,9 @@ const slice = createSlice({
       })
       .addCase(fetchDataThunk.rejected, (state, action) => {
         state.error = action.payload;
+      })
+      .addCase(deleteTodoThunk.fulfilled, (state, action) => {
+        state.todos = state.todos.filter(item => item.id !== action.payload);
       });
   },
 });
