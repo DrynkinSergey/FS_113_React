@@ -9,6 +9,5 @@ export const store = configureStore({
     todolist: todosReducer,
     filter: filterReducer,
   },
-
   devTools: import.meta.env.MODE === 'development',
 });

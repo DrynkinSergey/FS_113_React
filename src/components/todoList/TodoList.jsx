@@ -4,19 +4,20 @@ import { addTodo, changeTitle, deleteTodo } from '../../redux/todosSlice';
 import { nanoid } from '@reduxjs/toolkit';
 import SearchBar from '../SearchBar/SearchBar';
 import { changeFilter } from '../../redux/filterSlice';
-import { deleteTodoThunk } from '../../redux/operations';
+import { addTodoThunk, deleteTodoThunk, editTodo } from '../../redux/operations';
 
 const TodoList = () => {
   const todos = useSelector(state => state.todolist.todos);
   const filter = useSelector(state => state.filter.filter);
   const error = useSelector(state => state.todolist.error);
+  const loading = useSelector(state => state.todolist.isLoading);
   const dispatch = useDispatch();
   const handleAddTodo = data => {
     const newtodo = {
       id: nanoid(),
       todo: data.todo,
     };
-    dispatch(addTodo(newtodo));
+    dispatch(addTodoThunk(newtodo));
   };
 
   const handleChangeQuery = query => {
@@ -34,11 +35,12 @@ const TodoList = () => {
         {filteredData.map(item => (
           <li key={item.id}>
             <h2>{item.todo}</h2>
-            <button onClick={() => dispatch(changeTitle({ ...item, todo: 'REDUX THE BEST TECHNOLOGY' }))}>Edit title</button>
+            <button onClick={() => dispatch(editTodo({ ...item, todo: 'REDUX THE BEST TECHNOLOGY' }))}>Edit title</button>
             <button onClick={() => dispatch(deleteTodoThunk(item.id))}>Delete</button>
           </li>
         ))}
       </ul>
+      {loading && <h2>loading...</h2>}
       {error && <h2>Server is dead...</h2>}
     </div>
   );

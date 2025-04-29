@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { deleteTodoThunk, fetchDataThunk } from './operations';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { addTodoThunk, deleteTodoThunk, editTodo, fetchDataThunk } from './operations';
 //https://6811025927f2fdac2413a9fb.mockapi.io/tasks
 const initialState = {
   todos: [],
@@ -32,14 +32,28 @@ const slice = createSlice({
   },
   extraReducers: builder => {
     builder
+
+      .addCase(deleteTodoThunk.fulfilled, (state, action) => {
+        state.todos = state.todos.filter(item => item.id !== action.payload);
+      })
+      .addCase(addTodoThunk.fulfilled, (state, action) => {
+        state.todos.push(action.payload);
+      })
       .addCase(fetchDataThunk.fulfilled, (state, action) => {
         state.todos = action.payload;
       })
-      .addCase(fetchDataThunk.rejected, (state, action) => {
+      .addCase(editTodo.fulfilled, (state, action) => {
+        state.todos = state.todos.map(item => (item.id === action.payload.id ? action.payload : item));
+      })
+      .addMatcher(isAnyOf(editTodo.rejected, addTodoThunk.rejected, deleteTodoThunk.rejected, fetchDataThunk.rejected), (state, action) => {
         state.error = action.payload;
       })
-      .addCase(deleteTodoThunk.fulfilled, (state, action) => {
-        state.todos = state.todos.filter(item => item.id !== action.payload);
+      .addMatcher(isAnyOf(editTodo.pending, addTodoThunk.pending, deleteTodoThunk.pending, fetchDataThunk.pending), (state, action) => {
+        state.error = null;
+        state.isLoading = true;
+      })
+      .addMatcher(isAnyOf(editTodo.fulfilled, addTodoThunk.fulfilled, deleteTodoThunk.fulfilled, fetchDataThunk.fulfilled), (state, action) => {
+        state.isLoading = false;
       });
   },
 });
