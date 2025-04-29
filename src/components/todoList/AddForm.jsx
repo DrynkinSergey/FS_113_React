@@ -13,7 +13,7 @@ const AddForm = ({ handleAddTodo }) => {
     <div>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         <Form>
-          <Field name='todo' />
+          <Field placeholder='New todo value' name='todo' />
           <button type='submit'>Add todo</button>
         </Form>
       </Formik>

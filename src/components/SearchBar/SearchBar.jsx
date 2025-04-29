@@ -12,7 +12,7 @@ const SearchBar = ({ handleChangeQuery }) => {
     <section>
       <Formik onSubmit={handleSubmit} initialValues={initialValues}>
         <Form>
-          <Field name='query' />
+          <Field placeholder='Enter query...' name='query' />
           <button type='submit'>Search</button>
         </Form>
       </Formik>

@@ -1,7 +1,7 @@
 const Header = () => {
   return (
     <header>
-      <h2>Redux</h2>
+      <h2>Redux Async</h2>
     </header>
   );
 };

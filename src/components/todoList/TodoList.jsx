@@ -8,6 +8,7 @@ import { changeFilter } from '../../redux/filterSlice';
 const TodoList = () => {
   const todos = useSelector(state => state.todolist.todos);
   const filter = useSelector(state => state.filter.filter);
+  const error = useSelector(state => state.todolist.error);
   const dispatch = useDispatch();
   const handleAddTodo = data => {
     const newtodo = {
@@ -27,7 +28,7 @@ const TodoList = () => {
     <div>
       <AddForm handleAddTodo={handleAddTodo} />
       {/* <SearchBar handleChangeQuery={handleChangeQuery} /> */}
-      <input type='text' onChange={e => handleChangeQuery(e.target.value)} />
+      <input type='text' placeholder='Query for search' onChange={e => handleChangeQuery(e.target.value)} />
       <ul>
         {filteredData.map(item => (
           <li key={item.id}>
@@ -37,6 +38,7 @@ const TodoList = () => {
           </li>
         ))}
       </ul>
+      {error && <h2>Server is dead...</h2>}
     </div>
   );
 };
