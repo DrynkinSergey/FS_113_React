@@ -11,3 +11,9 @@ export const store = configureStore({
   },
   devTools: import.meta.env.MODE === 'development',
 });
+
+// CRUD
+// C - Create // post
+// R - Read // get
+// U - Update // patch/put
+// D - Delete // delete

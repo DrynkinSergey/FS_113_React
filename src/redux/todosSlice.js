@@ -11,28 +11,10 @@ const slice = createSlice({
   name: 'todolist',
   initialState,
   reducers: {
-    addTodo: (state, action) => {
-      state.todos.push(action.payload);
-    },
-    deleteTodo: (state, action) => {
-      state.todos = state.todos.filter(item => item.id !== action.payload);
-    },
-    changeTitle: (state, action) => {
-      state.todos = state.todos.map(item => (item.id === action.payload.id ? action.payload : item));
-    },
-    dataFulfilledOperation: (state, action) => {
-      state.todos = action.payload;
-    },
-    setLoading: (state, action) => {
-      state.isLoading = action.payload;
-    },
-    setError: (state, action) => {
-      state.error = action.payload;
-    },
+    setFavorites: () => {},
   },
   extraReducers: builder => {
     builder
-
       .addCase(deleteTodoThunk.fulfilled, (state, action) => {
         state.todos = state.todos.filter(item => item.id !== action.payload);
       })

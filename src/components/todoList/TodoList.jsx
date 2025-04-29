@@ -32,9 +32,11 @@ const TodoList = () => {
       {/* <SearchBar handleChangeQuery={handleChangeQuery} /> */}
       <input type='text' placeholder='Query for search' onChange={e => handleChangeQuery(e.target.value)} />
       <ul>
-        {filteredData.map(item => (
+        {filteredData.map((item, idx) => (
           <li key={item.id}>
-            <h2>{item.todo}</h2>
+            <h2>
+              {idx + 1}.{item.todo}
+            </h2>
             <button onClick={() => dispatch(editTodo({ ...item, todo: 'REDUX THE BEST TECHNOLOGY' }))}>Edit title</button>
             <button onClick={() => dispatch(deleteTodoThunk(item.id))}>Delete</button>
           </li>

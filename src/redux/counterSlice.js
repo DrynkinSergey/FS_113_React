@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { deleteTodoThunk } from './operations';
 
 // 1. Даємо рамки в яких працює слайс. Тільки цей стан!
 const initialState = {
   counter: 1,
   step: 1,
+  name: 'BEFORE INTERACT WITH DELETE',
 };
 
 // 2. Викликаємо createSlice функцію, котру треба налаштувати. Вона поверне нам обʼєкт з екшенами та редьюсером
@@ -25,6 +27,11 @@ const slice = createSlice({
     changeStep: (state, action) => {
       state.step = action.payload;
     },
+  },
+  extraReducers: builder => {
+    builder.addCase(deleteTodoThunk.fulfilled, state => {
+      state.name = 'TADAAAAAM';
+    });
   },
 });
 
