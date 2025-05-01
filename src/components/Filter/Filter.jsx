@@ -7,10 +7,16 @@ const Filter = () => {
     dispatch(changeOption(variant));
   };
   return (
-    <div>
-      <button onClick={() => handleChangeOption('all')}>All</button>
-      <button onClick={() => handleChangeOption('active')}>Active</button>
-      <button onClick={() => handleChangeOption('completed')}>Completed</button>
+    <div className='flex justify-center gap-4 my-2'>
+      <button className='btn btn-secondary' onClick={() => handleChangeOption('all')}>
+        All
+      </button>
+      <button className='btn btn-secondary' onClick={() => handleChangeOption('active')}>
+        Active
+      </button>
+      <button className='btn btn-secondary' onClick={() => handleChangeOption('completed')}>
+        Completed
+      </button>
     </div>
   );
 };

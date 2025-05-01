@@ -10,11 +10,13 @@ const AddForm = ({ handleAddTodo }) => {
     options.resetForm();
   };
   return (
-    <div>
+    <div className='flex justify-center'>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        <Form>
-          <Field placeholder='New todo value' name='todo' />
-          <button type='submit'>Add todo</button>
+        <Form className='flex gap-4 py-2'>
+          <Field className='input input-primary' placeholder='New todo value' name='todo' />
+          <button className='btn btn-primary' type='submit'>
+            Add todo
+          </button>
         </Form>
       </Formik>
     </div>
