@@ -5,12 +5,25 @@ import { nanoid } from '@reduxjs/toolkit';
 import SearchBar from '../SearchBar/SearchBar';
 import { changeFilter } from '../../redux/filterSlice';
 import { addTodoThunk, deleteTodoThunk, editTodo } from '../../redux/operations';
+import {
+  selectError,
+  selectFilter,
+  selectFilteredTodosByOption,
+  selectFilteredTodosByOptionMemo,
+  selectIsLoading,
+  selectOption,
+  selectTodos,
+  selectUncompletedTodos,
+  selectUncompletedTodosMemo,
+} from '../../redux/selectors';
+import Filter from '../Filter/Filter';
 
 const TodoList = () => {
-  const todos = useSelector(state => state.todolist.todos);
-  const filter = useSelector(state => state.filter.filter);
-  const error = useSelector(state => state.todolist.error);
-  const loading = useSelector(state => state.todolist.isLoading);
+  const todos = useSelector(selectFilteredTodosByOptionMemo);
+  const filter = useSelector(selectFilter);
+  const error = useSelector(selectError);
+  const loading = useSelector(selectIsLoading);
+  const uncompletedTodos = useSelector(selectUncompletedTodosMemo);
   const dispatch = useDispatch();
   const handleAddTodo = data => {
     const newtodo = {
@@ -24,16 +37,20 @@ const TodoList = () => {
     dispatch(changeFilter(query));
   };
 
-  const filteredData = todos.filter(item => item.todo.toLowerCase().includes(filter.toLowerCase()));
+  // const items = getFilteredDataByOption();
+  // const filteredData = items.filter(item => item.todo.toLowerCase().includes(filter.toLowerCase()));
 
   return (
     <div>
       <AddForm handleAddTodo={handleAddTodo} />
       {/* <SearchBar handleChangeQuery={handleChangeQuery} /> */}
       <input type='text' placeholder='Query for search' onChange={e => handleChangeQuery(e.target.value)} />
+      <Filter />
+      <h2>Your uncompleted tasks: {uncompletedTodos}</h2>
       <ul>
-        {filteredData.map((item, idx) => (
+        {todos.map((item, idx) => (
           <li key={item.id}>
+            <input onChange={() => dispatch(editTodo({ ...item, isCompleted: !item.isCompleted }))} type='checkbox' checked={item.isCompleted} />
             <h2>
               {idx + 1}.{item.todo}
             </h2>
