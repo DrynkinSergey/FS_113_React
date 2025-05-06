@@ -1,12 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { counterReducer } from './counterSlice';
 import { todosReducer } from './todosSlice';
 import { filterReducer } from './filterSlice';
 import { optionReducer } from './optionSlice';
+// ('https://task-manager-api.goit.global');
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     todolist: todosReducer,
     filter: filterReducer,
     option: optionReducer,
