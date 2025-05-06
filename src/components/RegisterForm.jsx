@@ -1,7 +1,10 @@
 import { Field, Form, Formik } from 'formik';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { registerThunk } from '../redux/auth/operations';
 
 const RegisterForm = () => {
+  const dispatch = useDispatch();
   const initialValues = {
     name: '',
     email: '',
@@ -9,9 +12,10 @@ const RegisterForm = () => {
   };
   const handleSubmit = (values, options) => {
     console.log(values);
+    dispatch(registerThunk(values));
   };
   return (
-    <div className='hero bg-base-200 min-h-screen'>
+    <div className='hero  text-2xl bg-base-200 min-h-screen'>
       <div className='hero-content flex-col lg:flex-row-reverse'>
         <div className='text-center lg:text-left'>
           <h1 className='text-5xl font-bold'>Register now!</h1>
@@ -21,7 +25,7 @@ const RegisterForm = () => {
           <div className='card-body'>
             <Formik initialValues={initialValues} onSubmit={handleSubmit}>
               <Form>
-                <fieldset className='fieldset'>
+                <fieldset className='fieldset text-xl'>
                   <label className='label'>Name</label>
                   <Field name='name' type='name' className='input' placeholder='Name' />
                   <label className='label'>Email</label>
@@ -37,6 +41,10 @@ const RegisterForm = () => {
                 </fieldset>
               </Form>
             </Formik>
+            <div className='divider divider-ghost'></div>
+            <Link className='text-lg text-center' to='/'>
+              Back to Home
+            </Link>
           </div>
         </div>
       </div>

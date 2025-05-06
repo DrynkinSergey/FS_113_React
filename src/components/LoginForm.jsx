@@ -1,16 +1,20 @@
 import { Field, Form, Formik } from 'formik';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { loginThunk } from '../redux/auth/operations';
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
   const initialValues = {
     email: '',
     password: '',
   };
   const handleSubmit = (values, options) => {
+    dispatch(loginThunk(values));
     console.log(values);
   };
   return (
-    <div className='hero bg-base-200 min-h-screen'>
+    <div className='hero text-2xl bg-base-200 min-h-screen'>
       <div className='hero-content flex-col lg:flex-row-reverse'>
         <div className='text-center lg:text-left'>
           <h1 className='text-5xl font-bold'>Login now!</h1>
@@ -20,7 +24,7 @@ const LoginForm = () => {
           <div className='card-body'>
             <Formik initialValues={initialValues} onSubmit={handleSubmit}>
               <Form>
-                <fieldset className='fieldset'>
+                <fieldset className='fieldset text-xl'>
                   <label className='label'>Email</label>
                   <Field name='email' type='email' className='input' placeholder='Email' />
                   <label className='label'>Password</label>
@@ -36,6 +40,10 @@ const LoginForm = () => {
                 </fieldset>
               </Form>
             </Formik>
+            <div className='divider divider-ghost'></div>
+            <Link className='text-lg text-center' to='/'>
+              Back to Home
+            </Link>
           </div>
         </div>
       </div>
