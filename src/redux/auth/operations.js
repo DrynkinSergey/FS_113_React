@@ -13,7 +13,7 @@ const removeAuthHeader = () => {
   goitAPI.defaults.headers.common.Authorization = ``;
 };
 
-export const registerThunk = createAsyncThunk('register', async (body, thunkAPI) => {
+export const registerThunk = createAsyncThunk('auth/register', async (body, thunkAPI) => {
   try {
     const response = await goitAPI.post('/users/signup', body);
     setAuthHeader(response.data.token);
@@ -23,7 +23,7 @@ export const registerThunk = createAsyncThunk('register', async (body, thunkAPI)
   }
 });
 
-export const loginThunk = createAsyncThunk('login', async (body, thunkAPI) => {
+export const loginThunk = createAsyncThunk('auth/login', async (body, thunkAPI) => {
   try {
     const response = await goitAPI.post('/users/login', body);
     setAuthHeader(response.data.token);
@@ -33,7 +33,7 @@ export const loginThunk = createAsyncThunk('login', async (body, thunkAPI) => {
   }
 });
 
-export const logoutThunk = createAsyncThunk('logout', async (_, thunkAPI) => {
+export const logoutThunk = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
     await goitAPI.post('/users/logout');
     removeAuthHeader();
