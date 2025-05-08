@@ -28,7 +28,7 @@ const TodoList = () => {
   const handleAddTodo = data => {
     const newtodo = {
       id: nanoid(),
-      todo: data.todo,
+      text: data.text,
     };
     dispatch(addTodoThunk(newtodo));
   };
@@ -61,10 +61,10 @@ const TodoList = () => {
                     type='checkbox'
                     checked={item.isCompleted}
                   />
-                  <h2> {item.todo}</h2>
+                  <h2> {item.text}</h2>
                 </div>
                 <div className='card-actions justify-end flex gap-2'>
-                  <button className='btn btn-ghost' onClick={() => dispatch(editTodo({ ...item, todo: 'REDUX THE BEST TECHNOLOGY' }))}>
+                  <button className='btn btn-ghost' onClick={() => dispatch(editTodo({ ...item, text: 'REDUX THE BEST TECHNOLOGY' }))}>
                     Edit title
                   </button>
                   <button className='btn btn-secondary' onClick={() => dispatch(deleteTodoThunk(item.id))}>

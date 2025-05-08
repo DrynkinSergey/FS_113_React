@@ -9,6 +9,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { refreshThunk } from '../redux/auth/operations';
 import { selectIsRefreshing } from '../redux/auth/selectors';
+import PrivateRoute from './PrivateRoute';
+import RestrictedRoute from './RestrictedRoute';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -20,11 +22,19 @@ const App = () => {
     <>
       <Routes>
         <Route path='/' element={<SharedLayout />}>
-          <Route index element={<Home />} />
-          <Route path='tasks' element={<Tasks />} />
+          <Route index element={<RestrictedRoute component={<Home />} redirectTo='/tasks' />} />
+          <Route
+            path='tasks'
+            element={
+              <PrivateRoute>
+                <Tasks />
+              </PrivateRoute>
+            }
+          />
         </Route>
         <Route path='*' element={<NotFound />} />
-        <Route path='/login' element={<Login />} />
+        <Route path='/login' element={<RestrictedRoute component={<Login />} redirectTo='/tasks' />} />
+
         <Route path='/register' element={<Register />} />
       </Routes>
     </>

@@ -1,7 +1,7 @@
 import { Field, Form, Formik } from 'formik';
 const AddForm = ({ handleAddTodo }) => {
   const initialValues = {
-    todo: '',
+    text: '',
   };
 
   const handleSubmit = (values, options) => {
@@ -13,7 +13,7 @@ const AddForm = ({ handleAddTodo }) => {
     <div className='flex justify-center'>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         <Form className='flex gap-4 py-2'>
-          <Field className='input input-primary' placeholder='New todo value' name='todo' />
+          <Field className='input input-primary' placeholder='New todo value' name='text' />
           <button className='btn btn-primary' type='submit'>
             Add todo
           </button>

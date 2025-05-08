@@ -1,5 +1,6 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { addTodoThunk, deleteTodoThunk, editTodo, fetchDataThunk } from './operations';
+import { logoutThunk } from './auth/operations';
 //https://6811025927f2fdac2413a9fb.mockapi.io/tasks
 const initialState = {
   todos: [],
@@ -18,6 +19,7 @@ const slice = createSlice({
       .addCase(deleteTodoThunk.fulfilled, (state, action) => {
         state.todos = state.todos.filter(item => item.id !== action.payload);
       })
+      .addCase(logoutThunk.fulfilled, () => initialState)
       .addCase(addTodoThunk.fulfilled, (state, action) => {
         state.todos.push(action.payload);
       })
